@@ -34,19 +34,25 @@ list_sonst={'Dateiname':"Steckbrief",
 ####################################################################
 class PDF(FPDF):
     def header(self):
-        # Select Arial bold 15
-        self.set_font('Arial', 'B', 15)
-
         #self.cell(0, 15, 'Title', 1, 0, 'C')
-        pdf.cell(0, 10,link=pdf.image('Header.png',None,10,190))
-        # Line break
+        self.set_font('helvetica', size=12) 
+        self.image('Header.png', None,10,190)
         self.ln(40)
+
+
+    def footer(self):
+        self.set_y(-15)
+        self.set_line_width(0.5)
+        self.set_font('helvetica', size=12) 
+        self.line(x1=10, y1=280, x2=200, y2=280)
+        self.cell(0,10, f'Seite {self.page_no()}',align='R')
+        
 
 
 pdf = PDF(format="A4")
 pdf.add_page()
 pdf.set_font('helvetica', size=12)            
-pdf.cell(0,20, txt="hello world", ln=True, border=True)
+pdf.cell(0,20,"hello world",border=True)
 
 pdf.add_page()
 pdf.output(list_sonst["Dateiname"] + ".pdf")
